@@ -17,5 +17,18 @@ jobs:
   strategy:
     maxParallel: 1
   steps:
-  - script: dotnet build --configuration $(buildConfiguration)
+  - script: 
+     echo "build"
+     dotnet restore
+     dotnet build --configuration $(buildConfiguration)
     displayName: 'dotnet build $(buildConfiguration)'
+    
+  - script: 
+     echo "Run test"
+     dotnet test --no-build --configuration $(buildConfiguration)
+    displayName: 'dotnet build $(buildConfiguration)'  
+    
+  - script: 
+     echo "publish"
+     dotnet publish --configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)
+    displayName: 'Publish Artifacts'  
